@@ -1,13 +1,15 @@
-// フォント、画像の初期設定
 @use "./modules/foundation/foundation";
-//ユーティリティスタイル
+@use "./modules/variables/variables";
+@use "./modules/mixin/mixin";
 @use "./modules/utility/utility";
 
 body {
   height: 100vh;
   overflow: hidden;
 }
-
-span > img {
-  // transition: 0.2s;
+@include mixin.medium {
+  //タブレット
+  body {
+    height: 100svh;
+  }
 }

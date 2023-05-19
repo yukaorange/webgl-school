@@ -340,4 +340,10 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+
+@media screen and (max-width: 780px) {
+  body {
+    height: 100svh;
+  }
+}
 /*# sourceMappingURL=style.css.map */
