@@ -42,6 +42,7 @@ export class Sketch {
       this.setupResize();
       this.addObjects();
       this.addCamera();
+      // this.addControls();
       this.resize();
       this.play();
       this.render();
@@ -82,7 +83,6 @@ export class Sketch {
    * Initialize GUI settings.
    */
   settings() {
-    let that = this;
     this.settings = {
       progress: 0,
     };
@@ -110,7 +110,7 @@ export class Sketch {
         this.currentWidth = newWidth;
         console.log(this.currentWidth, "リサイズ検知");
         this.resize();
-      }, 200);
+      }, 100);
     });
   }
   /**
@@ -166,14 +166,17 @@ export class Sketch {
     // this.camera.position.set(0, 0, 2);
     //perspectiveでオブジェクトの大きさを変えずに映す場合
     this.camera.position.set(0, 0, this.dist);
+  }
 
+  /**controls
+   */
+  addControls() {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
   }
   /**
    * Add objects to the scene.
    */
   addObjects() {
-    let that = this;
     this.material = new THREE.ShaderMaterial({
       extensions: {
         derivatives: "#extension GL_OES_standard_derivatives:",
