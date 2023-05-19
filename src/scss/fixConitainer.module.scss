@@ -1,0 +1,6 @@
+@use "./modules/variables/variables";
+@use "./modules/mixin/mixin";
+
+.fix{
+  position: fixed;
+}

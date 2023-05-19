@@ -1,0 +1,22 @@
+@use "./modules/variables/variables";
+@use "./modules/mixin/mixin";
+// @use "./modules/utility/utility";
+// @use "./modules/foundation/foundation";
+.footer {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: var(--space-xs) 0 var(--space-xs);
+  // background-color: #ffffff5b;
+}
+
+.inner {
+  @include mixin.inner;
+}
+
+.social {
+  width: fit-content;
+  margin-left: auto;
+}

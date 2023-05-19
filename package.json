@@ -1,0 +1,40 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-brands-svg-icons": "^6.3.0",
+    "@fortawesome/free-regular-svg-icons": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "date-fns": "^2.29.3",
+    "eslint": "8.35.0",
+    "eslint-config-next": "13.2.1",
+    "gsap": "^3.11.5",
+    "html-react-parser": "^3.0.12",
+    "html-to-text": "^9.0.4",
+    "lil-gui": "^0.18.1",
+    "microcms-js-sdk": "^2.3.2",
+    "next": "13.2.1",
+    "next-sitemap": "^4.0.5",
+    "plaiceholder": "^2.5.0",
+    "prettier": "^2.8.8",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sass": "^1.58.3",
+    "sharp": "^0.31.3",
+    "three": "^0.152.2"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.8.0",
+    "glslify-loader": "^2.0.0",
+    "raw-loader": "^4.0.2"
+  }
+}

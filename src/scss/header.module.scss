@@ -1,0 +1,23 @@
+@use "./modules/variables/variables";
+@use "./modules/mixin/mixin";
+// @use "./modules/utility/utility";
+// @use "./modules/foundation/foundation";
+
+.header {
+  padding: var(--space-xs) 0 var(--space-xs);
+  // background-color: #ffffff5b;
+}
+.inner {
+  @include mixin.inner;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heading {
+  // mix-blend-mode: ;
+  h2 {
+    color: var(--gray);
+    text-shadow: 0px 0px 1px var(--white);
+  }
+}

@@ -1,0 +1,10 @@
+@use "./modules/variables/variables";
+@use "./modules/mixin/mixin";
+// @use "./modules/utility/utility";
+// @use "./modules/foundation/foundation";
+
+.container{
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+}
