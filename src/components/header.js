@@ -1,5 +1,5 @@
 import Social from "@/components/social";
-import styles from "@/scss/Header.module.scss";
+import styles from "@/scss/header.module.scss";
 
 export default function Header() {
   return (
