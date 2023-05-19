@@ -4,6 +4,8 @@
 @use "./modules/utility/utility";
 
 body {
+  position: relative;
+  z-index: 0;
   height: 100vh;
   overflow: hidden;
 }

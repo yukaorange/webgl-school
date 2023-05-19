@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Sketch } from '@/js/webglSchoolSection1';
+import { Sketch } from '@/js/webglSection1';
 import styles from '@/scss/webglSection1.module.scss';
 
 export default function WebglSection1({images}) {
