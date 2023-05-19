@@ -15,7 +15,7 @@ export default function Social({ iconSize = "initial" }) {
         </a>
       </li>
       <li className={styles.item}>
-        <a href="https://github.com/yukaorange/webgl-school-tasks" target='blank'>
+        <a href="https://github.com/yukaorange/webgl-school" target='blank'>
           <FontAwesomeIcon icon={faGithub} />
           <span className="sr-only">Github</span>
         </a>

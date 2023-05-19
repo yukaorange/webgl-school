@@ -51,6 +51,7 @@ export class Sketch {
       // this.settings();
       // this.addControls();
       this.mouseEvent();
+      this.touchEvent();
       this.resize();
       this.play();
       this.render();
@@ -244,6 +245,18 @@ export class Sketch {
       this.updateGap();
     });
     window.addEventListener("mouseup", () => {
+      this.mouseFlg = false;
+      this.updateGap();
+    });
+  }
+  //タッチイベント
+  touchEvent() {
+    this.mouseFlg = false;
+    window.addEventListener("touchstart", () => {
+      this.mouseFlg = true;
+      this.updateGap();
+    });
+    window.addEventListener("touchend", () => {
       this.mouseFlg = false;
       this.updateGap();
     });
