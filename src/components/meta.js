@@ -6,6 +6,7 @@ import siteImg from "images/ogp.jpg";
 
 const { siteTitle, siteDesc, siteUrl, siteLocale, siteType, siteIcon } =
   siteMeta;
+  console.log(siteImg.src)
 
 export default function Meta({
   pageTitle,
