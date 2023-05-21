@@ -1,7 +1,7 @@
 export const siteMeta = {
   siteTitle: "webgl-school-tasks",
   siteDesc: "スクール課題を投稿していきます。",
-  siteUrl: "https://vercel.com/yukaorange/webgl-school",
+  siteUrl: "https://webgl-school.vercel.app",
   siteLang: "ja",
   siteLocate: "ja_JP",
   siteType: "website",
