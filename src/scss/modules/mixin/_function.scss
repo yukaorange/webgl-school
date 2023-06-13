@@ -12,3 +12,15 @@
   @return clamp(#{$min}px, #{$a * 100}vw + #{$b}px, #{$max}px);
 }
 
+
+@function myClampVW($min: 0, $max: 0, $minView: variables.$minView, $maxView: variables.$maxView) {
+  $minVw: ($min / $minView) * 100;
+  $maxVw: ($max / $maxView) * 100;
+  $a: ($maxVw - $minVw) / ($maxView - $minView);
+  $b: ($minVw - $a * $minView);
+  @return clamp(#{$minVw}vw, #{$a * 100}vw + #{$b}vw, #{$maxVw}vw);
+}
+
+@function vw($px: 0, $baseWidth: variables.$maxView) {
+  @return ($px / $baseWidth) * 100vw;
+}
