@@ -1,0 +1,2 @@
+.card{display:grid;grid-template-rows:auto 1fr}.thumbnail{aspect-ratio:16/9;overflow:hidden}.thumbnail img{transition-duration:.2s;transition-timing-function:ease-out}.thumbnail:hover img{transform:scale(1.1)}.body{margin-top:var(--space-xs)}.title{font-size:var(--text-lg)}
+/*# sourceMappingURL=linkCard.module.min.css.map */

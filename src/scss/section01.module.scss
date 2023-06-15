@@ -1,0 +1,8 @@
+@use "./modules/variables/variables";
+@use "./modules/mixin/mixin";
+
+.box {
+  display: flex;
+  margin-left: auto;
+  justify-content: flex-end;
+}

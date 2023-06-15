@@ -19,6 +19,7 @@ export default function Meta({
   const router = useRouter();
   const url = `${siteUrl}${router.asPath}`;
   const img = pageImg || siteImg.src;
+
   const imgW = pageImgW || siteImg.width;
   const imgH = pageImgH || siteImg.height;
   const imgUrl = img.startsWith("https") ? img : `${siteUrl}${img}`;

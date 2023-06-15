@@ -1,0 +1,11 @@
+@use "./modules/variables/variables";
+@use "./modules/mixin/mixin";
+
+.container{
+  @include mixin.inner;
+}
+
+.section{
+  padding-top: 10vw;
+  padding-bottom: 10vw;
+}

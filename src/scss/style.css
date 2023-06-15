@@ -279,13 +279,14 @@ progress {
 
 :root {
   --white: #ffffff;
-  --black: #222222;
-  --gray-10: #eeeeee;
-  --gray-25: #aaaaaa;
-  --gray-50: #707070;
+  --black: #000000;
+  --gray-10: #f1f1f1;
+  --gray-25: #252525;
+  --gray-50: #505050;
   --gray-75: #757575;
-  --accent: #0d87e0;
+  --accent: #385155;
   --text: clamp(16px, 0.1988071571vw + 15.2842942346px, 18px);
+  --text-lg: clamp(18px, 0.5964214712vw + 15.8528827038px, 24px);
   --display: clamp(72px, 8.7475149105vw + 40.5089463221px, 160px);
   --heading1: clamp(32px, 3.1809145129vw + 20.5487077535px, 64px);
   --heading2: clamp(24px, 0.2982107356vw + 22.9264413519px, 27px);
@@ -339,7 +340,6 @@ img {
 body {
   position: relative;
   z-index: 0;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
 }
 /*# sourceMappingURL=style.css.map */

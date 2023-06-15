@@ -3,15 +3,16 @@
 
 :root {
   //color
-  --white: #{variables.$white};
-  --black: #{variables.$black};
-  --gray-10: #{variables.$gray-10};
-  --gray-25: #{variables.$gray-25};
-  --gray-50: #{variables.$gray-50};
-  --gray-75: #{variables.$gray-75};
-  --accent: #{variables.$accent};
+  --white: #ffffff;
+  --black: #000000;
+  --gray-10: #f1f1f1;
+  --gray-25: #252525;
+  --gray-50: #505050;
+  --gray-75: #757575;
+  --accent: #385155;
   //font
   --text: #{mixin.myClamp(16, 18)};
+  --text-lg: #{mixin.myClamp(18, 24)};
   --display: #{mixin.myClamp(72, 160)};
   --heading1: #{mixin.myClamp(32, 64)};
   --heading2: #{mixin.myClamp(24, 27)};
