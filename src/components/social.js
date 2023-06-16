@@ -1,11 +1,11 @@
 import styles from "@/scss/social.module.scss";
-import NightModeContext from "./nightModeContext";
 import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
+import NightModeContext from "@/components/nightModeContext";
 
 export default function Social({ iconSize = "initial" }) {
-  const nightMode = useContext(NightModeContext);
+  const { nightMode } = useContext(NightModeContext);
 
   return (
     <ul className={styles.list} style={{ "--icon-size": iconSize }}>

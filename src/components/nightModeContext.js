@@ -8,6 +8,7 @@ export const NightModeContext = createContext({
 export const NightModeProvider = ({ children }) => {
   const [nightMode, setNightMode] = useState(false);
 
+
   return (
     <NightModeContext.Provider value={{ nightMode, setNightMode }}>
       {children}

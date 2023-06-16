@@ -13,12 +13,13 @@
   display: grid;
   justify-items: center;
   align-items: center;
-}
-
-.item.night{
-  a{
-    color: var(--white);
+  a {
+    color: var(--gray);
   }
 }
 
-
+.night {
+  a {
+    color: var(--white);
+  }
+}

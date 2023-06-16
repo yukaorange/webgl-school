@@ -6,6 +6,7 @@ import { NightModeContext } from "@/components/nightModeContext";
 
 export default function Header() {
   const { nightMode } = useContext(NightModeContext);
+  
   return (
     <header className={styles.header}>
       <div className={styles.inner}>

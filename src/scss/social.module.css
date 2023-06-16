@@ -11,8 +11,11 @@
   justify-items: center;
   align-items: center;
 }
+.item a {
+  color: var(--gray);
+}
 
-.item.night a {
+.night a {
   color: var(--white);
 }
 /*# sourceMappingURL=social.module.css.map */
