@@ -1,2 +1,2 @@
-.button{font-size:var(--text-lg);padding:var(--space-xs) var(--space-xs);border:1px solid var(--gray-50)}
+.button{font-size:var(--text-lg);padding:var(--space-xs) var(--space-xs);border:1px solid var(--gray-50)}.button.night{color:var(--white);border:1px solid var(--white)}
 /*# sourceMappingURL=backButton.module.min.css.map */

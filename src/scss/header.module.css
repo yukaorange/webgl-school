@@ -1,0 +1,25 @@
+.header {
+  padding: var(--space-xs) 0 var(--space-xs);
+  position: relative;
+  z-index: 10;
+}
+
+.inner {
+  max-width: min(80vw, 1232px);
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heading h2 {
+  color: var(--gray);
+  text-shadow: 0px 0px 1px var(--white);
+}
+
+.heading.night h2 {
+  color: var(--white);
+  text-shadow: 0px 0px 1px var(--gray);
+}
+/*# sourceMappingURL=header.module.css.map */

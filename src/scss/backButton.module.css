@@ -3,4 +3,9 @@
   padding: var(--space-xs) var(--space-xs);
   border: 1px solid var(--gray-50);
 }
+
+.button.night {
+  color: var(--white);
+  border: 1px solid var(--white);
+}
 /*# sourceMappingURL=backButton.module.css.map */

@@ -8,7 +8,7 @@ import LinkCard from "@/components/linkCard";
 export default function Home() {
   const subpages = [
     { page: "section01", title: "cube", thumbnail: "square.jpg" },
-    { page: "section02", title: "windmil", thumbnail: "image2.jpg" },
+    { page: "section02", title: "windmil", thumbnail: "nathan-night.webp" },
   ];
   return (
     <>

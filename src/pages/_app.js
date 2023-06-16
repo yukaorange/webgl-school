@@ -1,4 +1,5 @@
 import "@fortawesome/fontawesome-svg-core/styles.css";
+import { NightModeProvider } from "@/components/nightModeContext";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import Layout from "@/components/layout";
 import styles from "@/scss/style.scss";
@@ -7,9 +8,11 @@ config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatic
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <NightModeProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </NightModeProvider>
   );
 }
 

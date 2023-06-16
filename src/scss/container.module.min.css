@@ -1,2 +1,2 @@
-.container{max-width:min(80vw,1232px);margin-left:auto;margin-right:auto}.section{padding-top:10vw;padding-bottom:10vw}
+.container{max-width:min(80vw,1232px);margin-left:auto;margin-right:auto;position:relative;z-index:10}.section{padding-top:10vw;padding-bottom:10vw}
 /*# sourceMappingURL=container.module.min.css.map */
