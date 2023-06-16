@@ -7,7 +7,7 @@ import Meta from "@/components/meta";
 import { useEffect, useRef } from "react";
 import { Sketch } from "@/js/webglSection02";
 import styles from "@/scss/section02.module.scss";
-import pageOGP from "images/section01.jpg";
+import pageOGP from "images/section02.jpg";
 
 export default function Section02() {
   const images = ["/white-texture.jpg"];

@@ -38,6 +38,11 @@ export class Sketch {
     this.isPlaying = true;
     this.textures = [];
 
+    //wingの設定
+    this.rotationSpeed = 0.25; // 一定の回転速度
+    this.targetSpeed = 0.25; // 一定の目標速度
+    this.accelerationSpeed = 10; // マウス押下時の加速速度
+
     this.initiate(() => {
       this.setupResize();
       this.addObjects();
@@ -45,7 +50,7 @@ export class Sketch {
       this.addLight();
       this.addFog();
       // this.settings();
-      this.addControls();
+      // this.addControls();
       this.mouseEvent();
       this.touchEvent();
       this.resize();
@@ -165,7 +170,7 @@ export class Sketch {
   addObjects() {
     let wingHeight = 25;
     let wingWidth = 1.5;
-    let strutHeight = 200;
+    let strutHeight = 2000; //マジックナンバー
     this.wingGeometry = new THREE.ConeGeometry(wingWidth, wingHeight, 3);
     this.wingGeometry.translate(0, wingHeight / 2, 0);
     this.strutGeometry = new THREE.CylinderGeometry(
@@ -234,12 +239,23 @@ export class Sketch {
     if (!this.isPlaying) {
       return;
     }
+
     const elapsedTime = this.clock.getElapsedTime();
     this.time = elapsedTime;
 
     this.camera.lookAt(this.scene.position);
 
-    this.spinnerGroup.rotation.z = this.time * 0.1;
+    if (this.mouseFlg) {
+      this.rotationSpeed = this.accelerationSpeed;
+    } else if (this.rotationSpeed > this.targetSpeed) {
+      let speedDifference = this.rotationSpeed - this.targetSpeed;
+      // this.rotationSpeed -= speedDifference * 0.1;
+      this.rotationSpeed = this.targetSpeed;
+    } else {
+      this.rotationSpeed = this.targetSpeed;
+    }
+
+    this.spinnerGroup.rotation.z = this.time * this.rotationSpeed;
     this.fanGroup.rotation.y = Math.sin(this.time * 0.1) * -0.5;
 
     requestAnimationFrame(this.render.bind(this));
