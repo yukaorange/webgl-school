@@ -23,13 +23,13 @@ export default function Section02() {
     return () => {
       setNightMode(false);
     };
-  }, [setNightMode]);
+  }, [nightMode]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setBeforeBG(activeBG);
       setActiveBG(activeBG === 3 ? 1 : activeBG + 1);
-    }, 6000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [activeBG]);
 

@@ -27,7 +27,7 @@
           mask-size: 200% 200%;
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
-  transition-duration: 6s;
+  transition-duration: 4s;
   transition-property: -webkit-mask-position;
   transition-property: mask-position;
   transition-property: mask-position, -webkit-mask-position;

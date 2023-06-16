@@ -158,9 +158,9 @@ export class Sketch {
 
   addFog() {
     this.scene.fog = new THREE.Fog(
-      0x333333, //color
+      0x555555, //color
       75, //near
-      225 //far
+      150 //far
     );
   }
 
@@ -256,7 +256,7 @@ export class Sketch {
     }
 
     this.spinnerGroup.rotation.z = this.time * this.rotationSpeed;
-    this.fanGroup.rotation.y = Math.sin(this.time * 0.1) * -0.5;
+    this.fanGroup.rotation.y = Math.sin(this.time * 0.75) * 0.3;
 
     requestAnimationFrame(this.render.bind(this));
     this.renderer.render(this.scene, this.camera);
