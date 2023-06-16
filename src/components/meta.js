@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { siteMeta } from "@/lib/constants";
 import Link from "next/link";
-import siteImg from "images/ogp.png";
+import siteImg from "images/ogp2.jpg";
 
 const { siteTitle, siteDesc, siteUrl, siteLocale, siteType, siteIcon } =
   siteMeta;
@@ -28,10 +28,8 @@ export default function Meta({
       <title>{title}</title>
       <meta property="og:title" content={title} />
       <meta name="description" content={desc} />
-
       <meta rel="canonical" href={url} />
       <meta rel="og:url" content={url} />
-
       <meta property="og:description" content={desc} />
       <meta property="og:site_name" content={siteTitle} />
       <meta property="og:type" content={siteType} />
