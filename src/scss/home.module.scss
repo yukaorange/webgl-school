@@ -1,6 +1,17 @@
 @use "./modules/variables/variables";
 @use "./modules/mixin/mixin";
 
+.header {
+}
+
+.header__text {
+  font-size: var(--heading2);
+}
+
+.body {
+  margin-top: var(--space-md);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

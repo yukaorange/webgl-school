@@ -1,7 +1,7 @@
 import styles from "@/scss/backButton.module.scss";
 import { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 export default function BackButton({ nightMode }) {
   const router = useRouter();

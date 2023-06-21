@@ -1,2 +1,2 @@
-.grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));-moz-column-gap:var(--space-sm);column-gap:var(--space-sm);row-gap:var(--space-md)}@media screen and (max-width: 780px){.grid{grid-template-columns:repeat(auto-fit, minmax(225px, 1fr))}}
+.header__text{font-size:var(--heading2)}.body{margin-top:var(--space-md)}.grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));-moz-column-gap:var(--space-sm);column-gap:var(--space-sm);row-gap:var(--space-md)}@media screen and (max-width: 780px){.grid{grid-template-columns:repeat(auto-fit, minmax(225px, 1fr))}}
 /*# sourceMappingURL=home.module.min.css.map */
