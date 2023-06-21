@@ -24,8 +24,8 @@
   --space-xs: #{mixin.myClamp(12, 16)};
   --space-sm: #{mixin.myClamp(16, 24)};
   --space-md: #{mixin.myClamp(24, 32)};
-  --space-lg: #{mixin.myClamp(32, 48)};
-  --space-xl: #{mixin.myClamp(80, 120)};
+  --space-lg: #{mixin.myClamp(48, 64)};
+  --space-xl: #{mixin.myClamp(80, 144)};
 
   //easing
   --linear: cubic-bezier(0.25, 0.25, 0.75, 0.75);
