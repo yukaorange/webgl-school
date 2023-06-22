@@ -7,7 +7,7 @@ import Meta from "@/components/meta";
 import { useEffect, useRef } from "react";
 import { Sketch } from "@/js/webglSection03";
 import styles from "@/scss/section03.module.scss";
-import pageOGP from "images/section02.jpg";
+import pageOGP from "images/section03.jpg";
 
 export default function Section03() {
   const images = ["/earthmap.jpg"];
