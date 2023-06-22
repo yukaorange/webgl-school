@@ -9,7 +9,7 @@ export default function Home() {
   const subpages = [
     { page: "section01", title: "cube", thumbnail: "square.jpg" },
     { page: "section02", title: "windmil", thumbnail: "nathan-night.webp" },
-    { page: "section03", title: "earth", thumbnail: "earth-thumb.webp" },
+    { page: "section03", title: "neongenesis?", thumbnail: "mark6.jpg" },
   ];
   return (
     <>

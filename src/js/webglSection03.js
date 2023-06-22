@@ -2,10 +2,12 @@ import { gsap } from "gsap";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 // import vertexShader from "./shader/vertex.glsl";
 // import fragmentShader from "./shader/fragment.glsl";
 import * as dat from "lil-gui";
 import { TextureLoader } from "three";
+import { max } from "date-fns";
 
 export class Sketch {
   /**
@@ -39,17 +41,23 @@ export class Sketch {
     this.isPlaying = true;
     this.textures = [];
 
-    //wingの設定
-    this.rotationSpeed = 0.25; // 一定の回転速度
-    this.targetSpeed = 0.25; // 一定の目標速度
-    this.accelerationSpeed = 10; // マウス押下時の加速速度
+    //planeアニメションの設定
+    this.radius = 7.5; //槍の位置(半径)
+    this.earthRadius = 5; //地球の半径
+    this.dir = 0;
+    this.destinaitonPos = new THREE.Vector3(0, 0, 0);
+    this.destinaitonSpeed = 0.1;
+    this.planeSpeed = 0.0075;
+    this.latitude = 0;
+    this.longitude = 0;
 
     this.initiate(() => {
-      this.addGLTF().then(() => {
+      this.add3D().then(() => {
         this.setupResize();
         this.addObjects();
         this.addCamera();
         this.addLight();
+        this.addFog();
         // this.settings();
         this.addControls();
         this.mouseEvent();
@@ -131,7 +139,7 @@ export class Sketch {
   addCamera() {
     const fov = 60;
     const fovRad = (fov / 2) * (Math.PI / 180);
-    this.dist = 15;
+    this.dist = 20;
     this.camera = new THREE.PerspectiveCamera(
       fov,
       this.width / this.height,
@@ -158,33 +166,109 @@ export class Sketch {
     });
   }
 
-  addGLTF() {
-    return new Promise((resolve) => {
-      const loader = new GLTFLoader();
-      loader.load("/object/plane.glb", (gltf) => {
-        this.planeGLTF = gltf;
-        resolve();
-      });
+  /**
+   * Add fog to the scene.
+   */
+  addFog() {
+    this.scene.fog = new THREE.Fog(0x000000, 20, 40);
+  }
+
+  /**
+   * Load the model.
+   */
+  add3D() {
+    const GLTFloader = new GLTFLoader();
+    const FBXloader = new FBXLoader();
+
+    const planePromise = new Promise((resolve, reject) => {
+      GLTFloader.load(
+        "/object/plane.glb",
+        (gltf) => {
+          this.planeGLTF = gltf;
+          resolve();
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+          reject(error);
+        }
+      );
     });
+
+    const longinusPromise = new Promise((resolve, reject) => {
+      FBXloader.load(
+        "/object/longinus.fbx",
+        (fbx) => {
+          this.longinusFBX = fbx;
+          resolve();
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+          reject(error);
+        }
+      );
+    });
+    // const mark1Promise = new Promise((resolve, reject) => {
+    //   FBXloader.load(
+    //     "/object/mark1.fbx",
+    //     (fbx) => {
+    //       this.mark1FBX = fbx;
+    //       resolve();
+    //     },
+    //     undefined,
+    //     (error) => {
+    //       console.error(error);
+    //       reject(error);
+    //     }
+    //   );
+    // });
+
+    // return Promise.all([planePromise, longinusPromise, mark1Promise]);
+    return Promise.all([planePromise, longinusPromise]);
   }
 
   /**
    * Add objects to the scene.
    */
   addObjects() {
-    this.plane = this.planeGLTF.scene;
-    this.plane.scale.set(0.1, 0.1,0.1);
-    this.plane.position.set(0, 6, 0);
-    this.scene.add(this.plane);
+    this.group = new THREE.Group();
 
+    this.plane = this.planeGLTF.scene;
+    this.plane.size = 0.075;
+    this.plane.scale.set(this.plane.size, this.plane.size, this.plane.size);
+    this.plane.position.set(0, this.radius, 0);
+    this.plane.direction = new THREE.Vector3(0, 0, 1.0).normalize();
+    this.group.add(this.plane);
 
     this.earthMaterial = new THREE.MeshBasicMaterial({
       map: this.textures[0],
+      color: 0xff0000,
+      wireframe: true,
     });
-    this.earthGeometry = new THREE.SphereGeometry(5, 32, 32);
+    this.earthGeometry = new THREE.SphereGeometry(this.earthRadius, 32, 32);
     this.earth = new THREE.Mesh(this.earthGeometry, this.earthMaterial);
     this.earth.position.set(0, 0, 0);
-    this.scene.add(this.earth);
+    this.group.add(this.earth);
+
+    this.destination = this.longinusFBX;
+    const color = new THREE.Color("#7d1119");
+    this.destination.children[0].material[0].color = color;
+    this.destination.children[0].material[1].color = color;
+    this.destination.scale.set(0.03, 0.03, 0.03);
+    this.destination.position.set(0, -1, 0);
+    this.destination.direction = new THREE.Vector3(0, 0, 1.0).normalize();
+    this.group.add(this.destination);
+
+    // this.mark1 = this.mark1FBX;
+    // this.mark1.size = 0.001;
+    // this.mark1.scale.set(this.mark1.size, this.mark1.size, this.mark1.size);
+    // this.mark1.rotation.y = (Math.PI / 2) * 3;
+    // this.mark1.position.set(0, -2, 0);
+    // this.group.add(this.mark1);
+
+    this.group.position.set(0, -5, 0);
+    this.scene.add(this.group);
   }
   /**
    * Stop the rendering loop.
@@ -223,6 +307,15 @@ export class Sketch {
     });
   }
 
+  translateGeoCoords(latitude, longitude, radius) {
+    const phi = (latitude * Math.PI) / 180; //緯度をラジアンに変換
+    const theta = ((longitude - 180) * Math.PI) / 180; //経度をラジアンに変換
+    const x = -(radius * Math.cos(phi) * Math.cos(theta));
+    const y = radius * Math.sin(phi);
+    const z = radius * Math.cos(phi) * Math.sin(theta);
+    return new THREE.Vector3(x, y, z);
+  }
+
   /**
    * Render the scene.
    */
@@ -233,8 +326,115 @@ export class Sketch {
 
     const elapsedTime = this.clock.getElapsedTime();
     this.time = elapsedTime;
-
     this.camera.lookAt(this.scene.position);
+
+    //槍の座標移動
+    const speed = 0.2;
+    this.latitude = Math.abs(2 * Math.sin(this.time * 0.2)) * 90;
+    this.longitude += speed;
+    const pos = this.translateGeoCoords(
+      this.latitude, //緯度
+      this.longitude, //経度
+      this.radius
+    );
+    this.destination.position.set(pos.x, pos.y, pos.z);
+    // this.destination.position.set(6, 0, 0);
+
+    //地球の中心に向く（槍）
+    longinus.bind(this)();
+    function longinus() {
+      const prevDir = this.destination.direction.clone();
+      const dirToCenter = new THREE.Vector3();
+      dirToCenter.subVectors(this.earth.position, this.destination.position);
+      dirToCenter.normalize(); //地球の中心に向くベクトル
+
+      const normalAxis = new THREE.Vector3();
+      normalAxis.crossVectors(prevDir, dirToCenter);
+      normalAxis.normalize(); //中心を向くベクトルと前回の槍の向きの外積
+
+      const cos = prevDir.dot(dirToCenter);
+      const radians = Math.acos(cos); //中心を向くベクトルと槍の向きのなす角
+
+      // console.log(
+      //   "前回の槍の向き",
+      //   prevDir,
+      //   "中心方向ベクトル",
+      //   dirToCenter,
+      //   "外積",
+      //   normalAxis,
+      //   "角度",
+      //   radians
+      // );
+
+      const quaternion = new THREE.Quaternion();
+      quaternion.setFromAxisAngle(normalAxis, radians); //中心を向くベクトルと槍の向きのなす角からクォータニオンを作成
+
+      const step = 0.5;
+      this.destination.quaternion.slerp(quaternion, step); //槍のクォータニオンに掛け合わせる
+    }
+
+    //槍を追いかける（飛行機）
+    plane.bind(this)();
+    function plane() {
+      //地球の中心に向かうベクトル（飛行機）
+      const dirToCenter = new THREE.Vector3();
+      dirToCenter.subVectors(this.earth.position, this.plane.position);
+      dirToCenter.normalize();
+
+      //目的地へ向かうベクトル（飛行機）
+      const dirToDestinaiton = new THREE.Vector3();
+      dirToDestinaiton.subVectors(
+        this.destination.position,
+        this.plane.position
+      );
+
+      //引力をかけ合わせる
+      const pullStrength = 0.001; //引力の強さ
+      const pullToCenter = dirToCenter.multiplyScalar(pullStrength);
+      const pullToDestinaiton = dirToDestinaiton.multiplyScalar(pullStrength);
+      //目的地と地球中心に向かうベクトルを加算
+      this.plane.position.add(pullToCenter);
+      this.plane.position.add(pullToDestinaiton);
+
+      const normalizedPos = this.plane.position.clone().normalize();
+      this.plane.position.copy(normalizedPos.multiplyScalar(this.radius)); //飛行機の位置を半径に制限
+
+      const dir = new THREE.Vector3();
+      dir.subVectors(this.destination.position, this.plane.position);
+      dir.normalize();
+
+      this.plane.position.add(dir.multiplyScalar(this.planeSpeed));
+
+      //飛行機の向きを変える
+      const prevDir = this.plane.direction.clone();
+      const normalAxis = new THREE.Vector3();
+      normalAxis.crossVectors(prevDir, dir);
+      normalAxis.normalize();
+
+      const cos = prevDir.dot(dir);
+      const radians = Math.acos(cos);
+
+      const quaternion = new THREE.Quaternion();
+      quaternion.setFromAxisAngle(normalAxis, radians);
+
+      const step = 0.5;
+      this.plane.quaternion.slerp(quaternion, step);
+
+      //飛行機の姿勢を変える
+      const planeDir = this.plane.direction.clone();
+      const planeNormalAxis = new THREE.Vector3();
+      planeNormalAxis.crossVectors(planeDir, dir);
+      planeNormalAxis.normalize();
+
+      const planeCos = planeDir.dot(dir);
+      const planeRadians = Math.acos(planeCos);
+
+      const planeQuaternion = new THREE.Quaternion();
+      planeQuaternion.setFromAxisAngle(planeNormalAxis, planeRadians);
+
+      const planeStep = 0.5;
+      this.plane.quaternion.slerp(planeQuaternion, planeStep);
+    }
 
     requestAnimationFrame(this.render.bind(this));
     this.renderer.render(this.scene, this.camera);

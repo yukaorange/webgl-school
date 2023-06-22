@@ -8,13 +8,20 @@
   user-select: none;
 }
 
-
 .background {
   position: fixed;
   inset: 0;
   z-index: -10;
-  background-image: url("/space.webp");
+  background-image: url("/mark6.jpg");
   background-repeat: repeat;
   background-position: center;
   background-size: cover;
+  filter: grayscale(80) contrast(1.5) blur(3px);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 }
