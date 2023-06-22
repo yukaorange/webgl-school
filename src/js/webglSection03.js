@@ -146,7 +146,7 @@ export class Sketch {
       0.001,
       10000
     );
-    this.camera.position.set(0, 0, this.dist);
+    this.camera.position.set(0, 10, this.dist);
   }
   /**controls
    */
