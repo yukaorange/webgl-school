@@ -330,7 +330,7 @@ export class Sketch {
 
     //槍の座標移動
     const speed = 0.2;
-    this.latitude = Math.abs(2 * Math.sin(this.time * 0.2)) * 90;
+    // this.latitude = Math.abs(2 * Math.sin(this.time * 0.2)) * 90;
     this.longitude += speed;
     const pos = this.translateGeoCoords(
       this.latitude, //緯度
@@ -405,35 +405,70 @@ export class Sketch {
 
       this.plane.position.add(dir.multiplyScalar(this.planeSpeed));
 
-      //飛行機の向きを変える
-      const prevDir = this.plane.direction.clone();
-      const normalAxis = new THREE.Vector3();
-      normalAxis.crossVectors(prevDir, dir);
-      normalAxis.normalize();
+      //飛行機の向きを変える(ヨー)
+      yo.bind(this)();
+      function yo() {
+        const planePos2D = new THREE.Vector2(
+          this.plane.position.x,
+          this.plane.position.z
+        ).normalize();
 
-      const cos = prevDir.dot(dir);
-      const radians = Math.acos(cos);
+        const destinationPos2D = new THREE.Vector2(
+          this.destination.position.x,
+          this.destination.position.z
+        ).normalize();
 
-      const quaternion = new THREE.Quaternion();
-      quaternion.setFromAxisAngle(normalAxis, radians);
+        const destinationDir2D = new THREE.Vector2();
+        destinationDir2D.subVectors(destinationPos2D, planePos2D).normalize();
 
-      const step = 0.5;
-      this.plane.quaternion.slerp(quaternion, step);
+        const planeDir2D = new THREE.Vector2(
+          this.plane.direction.x,
+          this.plane.direction.z
+        ).normalize();
 
-      //飛行機の姿勢を変える
-      const planeDir = this.plane.direction.clone();
-      const planeNormalAxis = new THREE.Vector3();
-      planeNormalAxis.crossVectors(planeDir, dir);
-      planeNormalAxis.normalize();
+        const rotationAxis = new THREE.Vector3(0, 1, 0);
 
-      const planeCos = planeDir.dot(dir);
-      const planeRadians = Math.acos(planeCos);
+        const dot = planeDir2D.dot(destinationDir2D);
+        const angle = Math.acos(dot);
 
-      const planeQuaternion = new THREE.Quaternion();
-      planeQuaternion.setFromAxisAngle(planeNormalAxis, planeRadians);
+        const quaternion = new THREE.Quaternion();
+        quaternion.setFromAxisAngle(rotationAxis, angle);
 
-      const planeStep = 0.5;
-      this.plane.quaternion.slerp(planeQuaternion, planeStep);
+        if (planeDir2D.cross(destinationDir2D) > 0) {
+          this.plane.quaternion.slerp(quaternion.conjugate(), 0.1);
+        } else {
+          this.plane.quaternion.slerp(quaternion, 0.1);
+        }
+      }
+
+      //飛行機の向きを変える(ピッチ)
+      // pitch.bind(this)();
+      function pitch() {
+        const planePos2D = new THREE.Vector2(
+          this.plane.position.y,
+          this.plane.position.z
+        ).normalize();
+        const destinationPos2D = new THREE.Vector2(
+          this.destination.position.y,
+          this.destination.position.z
+        ).normalize();
+        const destinationDir2D = new THREE.Vector2();
+        destinationDir2D.subVectors(destinationPos2D, planePos2D).normalize();
+        const planeDir2D = new THREE.Vector2(
+          this.plane.direction.y,
+          this.plane.direction.z
+        ).normalize();
+        const rotationAxis = new THREE.Vector3(1, 0, 0);
+        const dot = planeDir2D.dot(destinationDir2D);
+        const angle = Math.acos(dot);
+        const quaternion = new THREE.Quaternion();
+        quaternion.setFromAxisAngle(rotationAxis, angle);
+        if (planeDir2D.cross(destinationDir2D) > 0) {
+          this.plane.quaternion.slerp(quaternion, 0.1);
+        } else {
+          this.plane.quaternion.slerp(quaternion.conjugate(), 0.1);
+        }
+      }
     }
 
     requestAnimationFrame(this.render.bind(this));
