@@ -42,8 +42,8 @@ export class Sketch {
     this.textures = [];
 
     //planeアニメションの設定
-    this.radius = 7.5; //槍の位置(半径)
-    this.earthRadius = 5; //地球の半径
+    this.radius = 8; //槍の位置(半径)
+    this.earthRadius = 7; //地球の半径
     this.dir = 0;
     this.destinaitonPos = new THREE.Vector3(0, 0, 0);
     this.destinaitonSpeed = 0.1;
@@ -331,9 +331,9 @@ export class Sketch {
     this.camera.lookAt(this.scene.position);
 
     //槍の座標移動
-    const speed = 0.2;
-    const freq = 0.5;
-    const amp = 30;
+    const speed = 1;
+    const freq = 0.75;
+    const amp = 60;
     this.latitude = Math.sin(this.time * freq) * amp;
     console.log(this.latitude);
     this.longitude += speed;
@@ -394,7 +394,7 @@ export class Sketch {
       );
 
       //引力をかけ合わせる
-      const pullStrength = 0.005; //引力の強さ
+      const pullStrength = 0.0085; //引力の強さ
       const pullToCenter = dirToCenter.multiplyScalar(pullStrength);
       const pullToDestinaiton = dirToDestinaiton.multiplyScalar(pullStrength);
       //目的地と地球中心に向かうベクトルを加算
@@ -402,32 +402,31 @@ export class Sketch {
       this.plane.position.add(pullToDestinaiton);
 
       const normalizedPos = this.plane.position.clone().normalize();
-      this.plane.position.copy(normalizedPos.multiplyScalar(this.radius)); //飛行機の位置を半径に制限
+      this.plane.position.copy(normalizedPos.multiplyScalar(this.radius - 0.2)); //飛行機の位置を半径に制限
       const newPos = this.plane.position.clone();
 
-      //   //飛行機の向きを槍に向ける
+      const planeDir = new THREE.Vector3();
+      planeDir.subVectors(newPos, prevPos);
+      planeDir.normalize(); //飛行機の向き
 
       //飛行機の向きを槍に向ける
-      const prevDir = this.plane.direction.clone();
-      const dirToDestination = new THREE.Vector3();
-      dirToDestination.subVectors(
-        this.destination.position,
-        this.plane.position
-      );
-      dirToDestination.normalize(); //目的地に向くベクトル
+      // const prevDir = this.plane.direction.clone();
+      // const dirToDestination = new THREE.Vector3();
+      // dirToDestination.subVectors(
+      //   this.destination.position,
+      //   this.plane.position
+      // );
+      // dirToDestination.normalize(); //目的地に向くベクトル
 
-      let normalAxis = new THREE.Vector3();
-      normalAxis.crossVectors(prevDir, dirToDestination);
-      normalAxis.normalize(); //目的地を向くベクトルと前回の飛行機の向きの外積
+      // let normalAxis = new THREE.Vector3();
+      // normalAxis.crossVectors(prevDir, dirToDestination);
+      // normalAxis.normalize(); //目的地を向くベクトルと前回の飛行機の向きの外積
 
-      if (normalAxis.dot(new THREE.Vector3(0, 1, 0)) < 0) {
-        // normalAxis.negate();
-      }
+      // const cos = prevDir.dot(dirToDestination);
+      // const radians = Math.acos(cos); //目的地を向くベクトルと飛行機の向きのなす角
 
-      const cos = prevDir.dot(dirToDestination);
-
-      const radians = Math.acos(cos); //目的地を向くベクトルと飛行機の向きのなす角
-
+      const gravity = new THREE.Vector3();
+      gravity.subVectors(this.earth.position, this.plane.position); // 飛行機から地球の中心への逆ベクトル
       const gravityInverse = new THREE.Vector3();
       gravityInverse.subVectors(this.plane.position, this.earth.position); // 飛行機から地球の中心への逆ベクトル
 
@@ -435,11 +434,16 @@ export class Sketch {
       const forward = new THREE.Vector3();
       forward.subVectors(this.destination.position, this.plane.position);
       forward.normalize();
+      const forwardInverse = new THREE.Vector3();
+      forwardInverse.subVectors(this.plane.position, this.destination.position);
+      forwardInverse.normalize();
 
       const airplaneDirection = new THREE.Matrix4();
-      airplaneDirection.lookAt(forward, this.earth.position, gravityInverse);
+      // airplaneDirection.lookAt(forward, this.earth.position, gravityInverse);
+      airplaneDirection.lookAt(planeDir, forwardInverse, gravityInverse);
       //eye（飛行機の目）, target（注視点）, up（上方向）
-      //前を向きつつ、飛行機の下側が地球の中心を向く
+      //前を向きつつ、飛行機の下側が地球の中心を向く(このプロジェクトで使用している飛行機のモデルは、下側が正面の設計であるため)
+
       this.plane.setRotationFromMatrix(airplaneDirection);
 
       // const quaternion = new THREE.Quaternion();
