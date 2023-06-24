@@ -332,10 +332,10 @@ export class Sketch {
 
     //槍の座標移動
     const speed = 0.2;
-    const freq = 1;
-    const amp = 60;
-    this.latitude = (Math.sin(this.time * freq) * amp);
-    console.log(this.latitude)
+    const freq = 0.5;
+    const amp = 30;
+    this.latitude = Math.sin(this.time * freq) * amp;
+    console.log(this.latitude);
     this.longitude += speed;
     const pos = this.translateGeoCoords(
       this.latitude, //緯度
@@ -406,11 +406,6 @@ export class Sketch {
       const newPos = this.plane.position.clone();
 
       //   //飛行機の向きを槍に向ける
-      // this.plane.lookAt(
-      //   this.destination.position.x,
-      //   this.destination.position.y,
-      //   this.destination.position.z
-      // );
 
       //飛行機の向きを槍に向ける
       const prevDir = this.plane.direction.clone();
@@ -433,22 +428,25 @@ export class Sketch {
 
       const radians = Math.acos(cos); //目的地を向くベクトルと飛行機の向きのなす角
 
-      // console.log(
-      //   "前回の飛行機の向き",
-      //   prevDir,
-      //   "目的地方向ベクトル",
-      //   dirToDestination,
-      //   "外積",
-      //   normalAxis,
-      //   "角度",
-      //   radians
-      // );
+      const gravityInverse = new THREE.Vector3();
+      gravityInverse.subVectors(this.plane.position, this.earth.position); // 飛行機から地球の中心への逆ベクトル
 
-      const quaternion = new THREE.Quaternion();
-      quaternion.setFromAxisAngle(normalAxis, radians); //目的地を向くベクトルと飛行機の向きのなす角からクォータニオンを作成
+      // 飛行機が向かう方向（前進）を計算
+      const forward = new THREE.Vector3();
+      forward.subVectors(this.destination.position, this.plane.position);
+      forward.normalize();
 
-      const step = 0.5;
-      this.plane.quaternion.slerp(quaternion, step); //飛行機のクォータニオンに掛け合わせる
+      const airplaneDirection = new THREE.Matrix4();
+      airplaneDirection.lookAt(forward, this.earth.position, gravityInverse);
+      //eye（飛行機の目）, target（注視点）, up（上方向）
+      //前を向きつつ、飛行機の下側が地球の中心を向く
+      this.plane.setRotationFromMatrix(airplaneDirection);
+
+      // const quaternion = new THREE.Quaternion();
+      // quaternion.setFromAxisAngle(normalAxis, radians); //目的地を向くベクトルと飛行機の向きのなす角からクォータニオンを作成
+
+      // const step = 0.5;
+      // this.plane.quaternion.slerp(quaternion, step); //飛行機のクォータニオンに掛け合わせる
     }
 
     requestAnimationFrame(this.render.bind(this));
