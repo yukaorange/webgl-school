@@ -335,7 +335,6 @@ export class Sketch {
     const freq = 0.75;
     const amp = 60;
     this.latitude = Math.sin(this.time * freq) * amp;
-    console.log(this.latitude);
     this.longitude += speed;
     const pos = this.translateGeoCoords(
       this.latitude, //緯度
